@@ -8,11 +8,43 @@ namespace plane
 {
     class Program
     {
-        public static int[] maps = new int[100];
+         static int[] maps = new int[100];
+         static int[] playerpos = new int[2];
+        static String[] player = new String[2];
         static void Main(string[] args)
         {
             GameShow();
+            Console.WriteLine("请输入玩家A的姓名：");
+            player[0] = Console.ReadLine();
+            while (player[0] == "")
+            {
+                Console.WriteLine("玩家A的姓名不能为空,请重新输入：");
+                player[0] = Console.ReadLine();
+
+            }
+            Console.WriteLine("请输入玩家B的姓名：");
+            player[1] = Console.ReadLine();
+            while (player[1] == "" || player[0]==player[1])
+            {
+                if(player[1] == "")
+                {
+                    Console.WriteLine("玩家B的姓名不能为空,请重新输入：");
+                    player[1] = Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("玩家A的姓名不能和玩家B相同,请重新输入：");
+                    player[1] = Console.ReadLine();
+                }
+                  
+            }
+            Console.Clear();
+            GameShow();
+            Console.WriteLine("{0}的士兵用A表示", player[0]);
+            Console.WriteLine("{0}的士兵用B表示", player[1]);
             InintMap();
+            DrawMap();
+            Console.WriteLine();
             Console.ReadKey();
         }
         //初始化游戏头
@@ -69,8 +101,85 @@ namespace plane
         //画地图
         public static void DrawMap()
         {
-
+            Console.WriteLine("图例：幸运轮盘☆  地雷●  暂停▲  时空隧道※");
+            //第一横行
+            for(int i = 0; i < 30; i++)
+            {
+                Console.Write(drawstringmap(i));
+            }
+            Console.WriteLine();
+            //第一竖行
+            for(int i = 30; i < 35; i++)
+            {
+                for(int j = 0; j < 29; j++)
+                {
+                    Console.Write("  ");
+              
+                }
+                Console.Write(drawstringmap(i));
+                Console.WriteLine();
+            }
+  
+            //第二横行
+            for (int i = 64; i >=35; i--)
+            {
+                Console.Write(drawstringmap(i));
+            }
+            Console.WriteLine();
+            //第二竖行
+            for (int i = 65; i <70; i++)
+            {
+                Console.WriteLine(drawstringmap(i));
+            }
+            //第三横行
+            for(int i = 70; i< 100; i++){
+                Console.Write(drawstringmap(i));
+            }
         }
-
+        //底图符号
+        public static String drawstringmap(int i)
+        {
+            String str = "";
+            if (playerpos[0] == playerpos[1] && playerpos[1] == i)
+            {
+                str = "<>";
+            }
+            else if (playerpos[0] == i)
+            {
+                str = "A";
+            }
+            else if (playerpos[0] == i)
+            {
+                str = "B";
+            }
+            else
+            {
+                switch (maps[i])
+                {
+                    case 0:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        str = "□";
+                        break;
+                    case 1:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        str = "☆";
+                        break;
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        str = "●";
+                        break;
+                    case 3:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        str = "▲";
+                        break;
+                    case 4:
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        str = "※";
+                        break;
+                }
+            }
+            return str;
+        }
+        
     }
 }
