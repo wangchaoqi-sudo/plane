@@ -16,7 +16,7 @@ namespace plane
         static void Main(string[] args)
         {
             GameShow();
-            Console.WriteLine("请输入玩家A的姓名：");
+            Console.WriteLine("请输入玩家A的姓名: ");
             player[0] = Console.ReadLine();
             while (player[0] == "")
             {
